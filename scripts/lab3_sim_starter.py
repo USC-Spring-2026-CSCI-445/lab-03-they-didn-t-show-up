@@ -41,9 +41,9 @@ class OdometryPublisher:
 
         ######### Your code starts here #########
         # add odometry equations to calculate robot's self.x, self.y, self.theta given encoder values
-        delta_x = self.vx * dt
-        delta_y = self.vy * dt
-        delta_theta = self.vth * dt     
+        delta_x = (self.vx * math.cos(self.theta) - self.vy * math.sin(self.theta)) * dt
+        delta_y = (self.vx * math.sin(self.theta) + self.vy * math.cos(self.theta)) * dt
+        delta_theta = self.vth * dt  
         
         self.x += delta_x
         self.y += delta_y
