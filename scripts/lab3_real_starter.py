@@ -29,9 +29,9 @@ class OdometryPublisher:
 
         ######### Your code starts here #########
         # TurtleBot3 Burger parameters from manual (https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/)
-        self.TICK_TO_RAD =
-        self.wheel_radius =
-        self.wheel_separation =
+        self.TICK_TO_RAD = 2 * np.pi / 4096
+        self.wheel_radius = .033
+        self.wheel_separation = .160
         ######### Your code ends here #########
 
         self.current_time = rospy.Time.now()
