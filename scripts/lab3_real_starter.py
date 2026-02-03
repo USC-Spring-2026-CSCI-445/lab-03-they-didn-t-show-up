@@ -29,7 +29,7 @@ class OdometryPublisher:
 
         ######### Your code starts here #########
         # TurtleBot3 Burger parameters from manual (https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/)
-        self.TICK_TO_RAD = 2 * np.pi / 4096
+        self.TICK_TO_RAD = 2 * math.pi / 4096
         self.wheel_radius = .033
         self.wheel_separation = .160
         ######### Your code ends here #########
@@ -56,7 +56,20 @@ class OdometryPublisher:
 
         ######### Your code starts here #########
         # add odometry equations to calculate robot's self.x, self.y, self.theta given encoder values
+        N = 4096
+        delta_left  = self.left_encoder - self.last_left_encoder
+        delta_right = self.right_encoder - self.last_right_encoder
+        delta_d = math.pi * 2 * self.wheel_radius * (delta_right + delta_left) / (2 * N)
+        
+        delta_theta   = math.pi * 2 * self.wheel_radius * (delta_right - delta_left) / (N * self.wheel_separation)
+        delta_x = delta_d * math.cos(self.theta + delta_theta / 2.0)
+        delta_y = delta_d * math.sin(self.theta + delta_theta / 2.0)
 
+        self.x += delta_x
+        self.y += delta_y
+        self.theta += delta_theta
+        self.last_left_encoder = self.left_encoder
+        self.last_right_encoder = self.right_encoder
         ######### Your code ends here #########
 
         odom_quat = tf.transformations.quaternion_from_euler(0, 0, self.theta)
