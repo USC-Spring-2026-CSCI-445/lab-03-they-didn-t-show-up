@@ -64,6 +64,8 @@ class OdometryPublisher:
         self.x += delta_d * math.cos(self.theta + delta_theta / 2.0)
         self.y += delta_d * math.sin(self.theta + delta_theta / 2.0)
         self.theta += delta_theta
+
+        print(f"x: {self.x:.3f}, y: {self.y:.3f}, theta: {math.degrees(self.theta):.1f}°")
         
         self.last_left_pos = self.left_wheel_pos
         self.last_right_pos = self.right_wheel_pos
